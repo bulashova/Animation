@@ -77,7 +77,7 @@ class StatsView @JvmOverloads constructor(
         for ((index, datum) in data.withIndex()) {
             val angle = 360F * datum
             paint.color = colors.getOrNull(index) ?: randomColor()
-            canvas.drawArc(oval, startFrom, angle * progress, false, paint)
+            canvas.drawArc(oval, startFrom + progress * 360, angle * progress, false, paint)
             startFrom += angle
         }
 
@@ -101,7 +101,7 @@ class StatsView @JvmOverloads constructor(
                 progress = anim.animatedValue as Float
                 invalidate()
             }
-            duration = 500
+            duration = 5000
             interpolator = LinearInterpolator()
         }.also {
             it.start()
