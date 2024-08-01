@@ -31,8 +31,19 @@ class StatsView @JvmOverloads constructor(
 
     private var progress = 0F
     private var valueAnimator: ValueAnimator? = null
+    private var fillingType = 0
 
     init {
+        context.theme.obtainStyledAttributes(
+            attrs, R.styleable.StatsView,
+            0, 0
+        ).apply {
+            try {
+                fillingType = getInteger(R.styleable.StatsView_fillingType, 0)
+            } finally {
+                recycle()
+            }
+        }
         context.withStyledAttributes(attrs, R.styleable.StatsView) {
             lineWidth = getDimension(R.styleable.StatsView_lineWidth, lineWidth)
             fontSize = getDimension(R.styleable.StatsView_fontSize, fontSize)
@@ -78,16 +89,19 @@ class StatsView @JvmOverloads constructor(
             val angle = 360F * datum
             paint.color = colors.getOrNull(index) ?: randomColor()
 
-            if (index == 0) {
-                canvas.drawArc(oval, startFrom, angle * progress, false, paint)
-            } else {
-                canvas.drawArc(
-                    oval,
-                    (startFrom + angle) * progress - 90F,
-                    angle * progress,
-                    false,
-                    paint
-                )
+            when (fillingType) {
+                0 -> canvas.drawArc(oval, startFrom, angle * progress, false, paint)
+                1 -> if (index == 0) {
+                    canvas.drawArc(oval, startFrom, angle * progress, false, paint)
+                } else {
+                    canvas.drawArc(
+                        oval,
+                        (startFrom + angle) * progress - 90F,
+                        angle * progress,
+                        false,
+                        paint
+                    )
+                }
             }
             startFrom += angle
         }

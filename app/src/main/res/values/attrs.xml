@@ -4,6 +4,10 @@
         <attr name="lineWidth" format="dimension|reference" />
         <attr name="fontSize" format="dimension|reference" />
         <attr name="colors" format="reference" />
+        <attr name="fillingType" format="enum">
+            <enum name="parallel" value="0"/>
+            <enum name="sequential" value="1"/>
+        </attr>
     </declare-styleable>
 </resources>
 
