@@ -91,6 +91,7 @@ class StatsView @JvmOverloads constructor(
 
             when (fillingType) {
                 0 -> canvas.drawArc(oval, startFrom, angle * progress, false, paint)
+
                 1 -> if (index == 0) {
                     canvas.drawArc(oval, startFrom, angle * progress, false, paint)
                 } else {
@@ -98,6 +99,23 @@ class StatsView @JvmOverloads constructor(
                         oval,
                         (startFrom + angle) * progress - 90F,
                         angle * progress,
+                        false,
+                        paint
+                    )
+                }
+
+                2 -> {
+                    canvas.drawArc(
+                        oval,
+                        startFrom + 45F,
+                        angle * progress / 2,
+                        false,
+                        paint
+                    )
+                    canvas.drawArc(
+                        oval,
+                        startFrom + 45F,
+                        -angle * progress / 2,
                         false,
                         paint
                     )
