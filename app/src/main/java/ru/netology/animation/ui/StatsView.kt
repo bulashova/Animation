@@ -84,6 +84,7 @@ class StatsView @JvmOverloads constructor(
             return
         }
 
+        var filledPartOfcircle = 0F
         var startFrom = -90F
         for ((index, datum) in data.withIndex()) {
             val angle = 360F * datum
@@ -92,16 +93,16 @@ class StatsView @JvmOverloads constructor(
             when (fillingType) {
                 0 -> canvas.drawArc(oval, startFrom, angle * progress, false, paint)
 
-                1 -> if (index == 0) {
-                    canvas.drawArc(oval, startFrom, angle * progress, false, paint)
-                } else {
-                    canvas.drawArc(
-                        oval,
-                        (startFrom + angle) * progress - 90F,
-                        angle * progress,
-                        false,
-                        paint
-                    )
+                1 -> {
+                    if (progress > filledPartOfcircle) {
+                        canvas.drawArc(
+                            oval, startFrom,
+                            360F * progress - startFrom - 90F,
+                            false, paint
+                        )
+                    } else return
+
+                    filledPartOfcircle += datum / data.sum()
                 }
 
                 2 -> {
@@ -116,6 +117,18 @@ class StatsView @JvmOverloads constructor(
                         oval,
                         startFrom + 45F,
                         -angle * progress / 2,
+                        false,
+                        paint
+                    )
+                }
+
+                3 -> if (index == 0) {
+                    canvas.drawArc(oval, startFrom, angle * progress, false, paint)
+                } else {
+                    canvas.drawArc(
+                        oval,
+                        (startFrom + angle) * progress - 90F,
+                        angle * progress,
                         false,
                         paint
                     )

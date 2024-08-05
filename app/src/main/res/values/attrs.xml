@@ -8,6 +8,7 @@
             <enum name="parallel" value="0"/>
             <enum name="sequential" value="1"/>
             <enum name="bidirectional" value="2"/>
+            <enum name="onCircle" value="3"/>
         </attr>
     </declare-styleable>
 </resources>
